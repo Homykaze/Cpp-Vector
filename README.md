@@ -6,3 +6,9 @@ Furthermore, there are 3 constructors implemented for this data structure, such 
 `vektor.hpp` and `vektor.cpp` contain an integer implementation of the class, which was my initial idea for this project.
 `vektor.hxx` contains a template implementation of the vector interface, completing this project.
 `main.cpp` uses the template implementation from `.hxx` header file, which works for any custom type, this example uses integers for simplicity.
+
+The "efficient" way of memory allocation is in the way the data structure is implemented: the user of the array has access only to the middle part of the structure demonstrated below. An instance of the class allocates twice as much memory whenever necessary.
+
+### [allocated memory][user's array][allocated memory]
+
+Users do not have direct access to the "allocated memory" parts of the data structure, but they can get it upon an explicit request, for example, with a `push_back()` method or similar. The only free access that they have is to the "user's array" section of the structure.
