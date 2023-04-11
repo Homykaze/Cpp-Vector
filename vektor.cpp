@@ -1,8 +1,8 @@
 #include <iostream>
 #include "vektor.hpp"
 
-namespace vektor 
-{
+namespace vektor{
+
 /// Instances declaration
 int Vektor::instances = 0;
 
@@ -169,4 +169,4 @@ Vektor::~Vektor()
     /// Memory deallocation
     delete[] vektor;
 }
-}
+} /*vektor*/

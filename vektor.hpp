@@ -84,5 +84,7 @@ private:
     /// Pointer to dynamically allocate memory whenever necessary, actual Vektor
     int* vektor;
 };
-}
-#endif
+
+} /*vektor*/
+
+#endif /*VEKTOR_HPP*/
