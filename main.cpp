@@ -1,8 +1,8 @@
+#include <iostream>
 #include "vektor.hxx"
 
-#include <iostream>
-
 using namespace vektor;
+
 
 /// Display vektor's emelents
 void display(const Vektor<int>& vek);
@@ -30,14 +30,21 @@ int main()
     display(vek);
     qsort(vek, 0, vek.size() - 1);
     display(vek);
+
+    /// Display contents using an iterator
+    std::cout << "\n";
+    for (Vektor<int>::iterator itr = vek.begin(); itr != vek.end(); ++itr)
+        std::cout << *itr << " ";
+    std::cout << "\n";
+
 }
 
 /// Implementations of utility functions
 void display(const Vektor<int>& vek)
 {
     for (int i = 0; i < vek.size(); ++i)
-        cout << vek.get(i) << " ";
-    cout << endl;
+        std::cout << vek.get(i) << " ";
+    std::cout << "\n";
 }
 
 void qsort(Vektor<int>& vek, int low, int high)

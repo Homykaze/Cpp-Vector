@@ -8,8 +8,8 @@
 /// twice as much memory  as users may request.
 
 #pragma once
-#ifndef VEKTOR_HPP
-#define VEKTOR_HPP
+#ifndef VEKTOR_HXX
+#define VEKTOR_HXX
 
 #include <iostream>
 
@@ -30,8 +30,8 @@ public:
         ++instances;
         length = 32;
         userLength = 0;
-        begin = 0;
-        end = 0;
+        start = 0;
+        finish = 0;
         /// Memory allocation
         vektor = new T[length];
     }
@@ -52,8 +52,8 @@ public:
         if (size < length && length - size < 16 || length > 32)
             length *= 2;
         /// Here we should be somewhere in the middle of the inaccessible to user array
-        begin = (length - size) / 2;
-        end = begin + size - 1;
+        start = (length - size) / 2;
+        finish = start + size - 1;
         /// Memory allocation
         vektor = new T[length];
     }
@@ -64,8 +64,8 @@ public:
     {
         length = other.length;
         userLength = other.userLength;
-        begin = other.begin;
-        end = other.end;
+        start = other.start;
+        finish = other.finish;
         vektor = new T[length];
         for (int i = 0; i < length; ++i)
             vektor[i] = other.vektor[i];
@@ -81,8 +81,8 @@ public:
         /// Rebuild vektor assigned to from scratch
         length = other.length;
         userLength = other.userLength;
-        begin = other.begin;
-        end = other.end;
+        start = other.start;
+        finish = other.finish;
         delete[] vektor;
         vektor = new T[length];
         for (int i = 0; i < length; ++i)
@@ -93,7 +93,7 @@ public:
     /// Getter of Vektor's length/size available to user
     int size() const
     {
-        return end - begin + 1;
+        return finish - start + 1;
     }
 
     /// Getter of a certain element by index
@@ -101,9 +101,9 @@ public:
     /// \param index: Index of an accessible element
     T get(int index) const
     {
-        if (userLength == 0 || index + begin > end)
+        if (userLength == 0 || index + start > finish)
             throw std::length_error("Unavailable memory access attempt.");
-        return vektor[begin + index];
+        return vektor[start + index];
     }
 
     /// Set function to assign a certain element a value by its index
@@ -112,31 +112,31 @@ public:
     /// \param value: Integer value of a desired element
     void set(int index, int value)
     {
-        if (userLength == 0 || index + begin > end)
+        if (userLength == 0 || index + start > finish)
             throw std::length_error("Unavailable memory access attempt.");
-        vektor[begin + index] = value;
+        vektor[start + index] = value;
     }
 
     /// Pushback: adds an element to the end of the array, resizing if necessary
     /// \param value: Integer value of a desired element
     void pushback(T value)
     {
-        if (begin + userLength == length)
+        if (start + userLength == length)
             vektor = resize();
         ++userLength;
-        ++end;
-        vektor[end] = value;
+        ++finish;
+        vektor[finish] = value;
     }
 
     /// Pushfront: adds an element to the beginning of the array, resizing if necessary
     /// \param value: Integer value of a desired element
     void pushfront(T value)
     {
-        if (begin == 0)
+        if (start == 0)
             vektor = resize();
         ++userLength;
-        --begin;
-        vektor[begin] = value;
+        --start;
+        vektor[start] = value;
     }
 
     /// Destructor deallocating memory of object instances
@@ -146,6 +146,32 @@ public:
         /// Memory deallocation
         delete[] vektor;
     }
+
+    /// Iterator part is here:
+    struct iterator 
+    {
+        /// Argument constructor
+        iterator(T *arg): ptr(arg) {}
+
+        /// Dereference operator
+        T& operator *() const { return *ptr; }
+        /// Pointer operator
+        T* operator ->() { return ptr; };
+        /// Prefix increment operator
+        iterator& operator ++() { ptr++; return *this; }
+        /// Suffix increment operator
+        iterator operator ++(int) { iterator temp = *this; ++(*this); return temp; }
+        /// Comparison operator
+        friend bool operator ==(const iterator& a, const iterator& b) { return (a.ptr == b.ptr); }
+        /// Not eqial bool operator
+        friend bool operator !=(const iterator& a, const iterator& b) { return (a.ptr != b.ptr); }
+
+    private:
+        T *ptr;
+    };
+
+    iterator begin() { return iterator(&vektor[start]); }
+    iterator end() { return iterator(&vektor[finish + 1]); }
 
 private:
 
@@ -158,14 +184,14 @@ private:
     {
         length *= 2;
         T* newVektor = new T[length];
-        int oldBegin = begin;
-        int oldEnd = end;
-        begin = (length - userLength) / 2;
-        end = begin + userLength - 1;
+        int oldStart = start;
+        int oldFinish = finish;
+        start = (length - userLength) / 2;
+        finish = start + userLength - 1;
 
         /// Copying existing values
         for (int i = 0; i < userLength; ++i)
-            newVektor[begin + i] = vektor[oldBegin + i];
+            newVektor[start + i] = vektor[oldStart + i];
 
         delete[] vektor;
         return newVektor;
@@ -175,18 +201,18 @@ private:
     /// Can be moved to public to be used in development
     void debug()
     {
-        std::cout << "Instances: " << instances << std::endl;
-        std::cout << "Full length: " << length << std::endl;
-        std::cout << "User length: " << userLength << std::endl;
-        std::cout << "Range for user length: [" << begin << " " << std::end << "]" << std::endl;
-        std::cout << "All values from vektor: " << std::endl;
+        std::cout << "Instances: " << instances << "\n";
+        std::cout << "Full length: " << length << "\n";
+        std::cout << "User length: " << userLength << "\n";
+        std::cout << "Range for user length: [" << start << " " << "\n" << "]" << "\n";
+        std::cout << "All values from vektor: " << "\n";
         for (int i = 0; i < length; ++i)
             std::cout << vektor[i] << " ";
-        std::cout << std::endl;
-        std::cout << "All values accessible to user: " << std::endl;
-        for (int i = begin; i <= end; ++i)
+        std::cout << "\n";
+        std::cout << "All values accessible to user: " << "\n";
+        for (int i = start; i <= finish; ++i)
             std::cout << vektor[i] << " ";
-        std::cout << std::endl;
+        std::cout << "\n";
     }
 
     /// Actual complete size of the Vektor
@@ -197,9 +223,9 @@ private:
     /// The following two indeces allow us to implement a dynamic floating array in the middle
     /// of a bigger one, which will significantly reduce the number of resizing operations
     /// Index of the first accessible element to user
-    int begin;
+    int start;
     /// Index of the last accessible element to user
-    int end;
+    int finish;
     /// Pointer to dynamically allocate memory whenever necessary, actual Vektor
     T* vektor;
 };
@@ -209,4 +235,4 @@ template <typename T>
 int Vektor<T>::instances = 0;
 
 } /*vektor*/
-#endif /*VEKTOR_HPP*/
+#endif /*VEKTOR_HXX*/
