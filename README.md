@@ -3,9 +3,8 @@ After getting to know the mere basics of the Standard Template Library in C++, a
 
 Furthermore, there are 3 constructors implemented for this data structure, such as: a no-argument constructor, constructor with an argument to set the size of a 'Vektor', and a copy constructor, to be able to instantiate a new object upon copying another instance. An assignment operator is implemented to prevent from freeing the same memory more than once to avoid crashes. A destructor is implemented to deallocate memory whenever an instance of this class is out of the scope (or is deleted) of the running instance.<br>
 
-`vektor.hpp` and `vektor.cpp` contain an integer implementation of the class, which was my initial idea for this project.
-`vektor.hxx` contains a template implementation of the vector interface, completing this project.
-`main.cpp` uses the template implementation from `.hxx` header file, which works for any custom type, this example uses integers for simplicity.
+`vektor.hxx` contains a template implementation of the vector interface.
+`main.cpp` makes the basic usage of it, which works for any custom type, this example uses integers for simplicity.
 
 The "efficient" way of memory allocation is in the way the data structure is implemented: the user of the array has access only to the middle part of the structure demonstrated below. An instance of the class allocates twice as much memory whenever necessary.
 
