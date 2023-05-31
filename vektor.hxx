@@ -105,7 +105,7 @@ public:
         return vektor[start + index];
     }
 
-    /// No need for setter methods with this overloaded operator
+    /// No need for setter methods with these overloaded operators
     T operator [](int index) const {
         if (userLength == 0 || index + start > finish)
             throw std::length_error("Unavailable memory access attempt.");
