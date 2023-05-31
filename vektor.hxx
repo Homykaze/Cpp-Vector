@@ -96,25 +96,20 @@ public:
         return finish - start + 1;
     }
 
-    /// Getter of a certain element by index
+    /// Getters of certain elements by index
     /// Throws length_error in case of error
     /// \param index: Index of an accessible element
-    T get(int index) const
-    {
+    T& operator [](int index) {
         if (userLength == 0 || index + start > finish)
             throw std::length_error("Unavailable memory access attempt.");
         return vektor[start + index];
     }
 
-    /// Set function to assign a certain element a value by its index
-    /// Throws length_error in case of error
-    /// \param index: Index of an accessible element
-    /// \param value: Integer value of a desired element
-    void set(int index, int value)
-    {
+    /// No need for setter methods with this overloaded operator
+    T operator [](int index) const {
         if (userLength == 0 || index + start > finish)
             throw std::length_error("Unavailable memory access attempt.");
-        vektor[start + index] = value;
+        return vektor[start + index];
     }
 
     /// Pushback: adds an element to the end of the array, resizing if necessary

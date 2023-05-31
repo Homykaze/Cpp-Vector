@@ -1,5 +1,5 @@
 #include <iostream>
-#include "vektor.hxx"
+#include "vektortemplate.hxx"
 
 using namespace vektor;
 
@@ -19,7 +19,7 @@ int main()
     int n = 5;
     Vektor<int> vek(n);
     for (int i = 0; i < vek.size(); ++i)
-        vek.set(i, n - i);
+        vek[i] = n - i;
     for (int i = 0; i < 20; ++i)
     {
         if (i % 2)
@@ -43,7 +43,7 @@ int main()
 void display(const Vektor<int>& vek)
 {
     for (int i = 0; i < vek.size(); ++i)
-        std::cout << vek.get(i) << " ";
+        std::cout << vek[i] << " ";
     std::cout << "\n";
 }
 
@@ -59,11 +59,11 @@ void qsort(Vektor<int>& vek, int low, int high)
 
 int partition(Vektor<int>& vek, int low, int high)
 {
-    int pivot = vek.get(high);
+    int pivot = vek[high];
     int i = low;
     for (int j = low; j < high; ++j)
     {
-        if (vek.get(j) < pivot)
+        if (vek[j] < pivot)
         {
             swap(i, j, vek);
             ++i;
@@ -75,7 +75,7 @@ int partition(Vektor<int>& vek, int low, int high)
 
 void swap(const int index1, const int index2, Vektor<int>& vek)
 {
-    const int temp = vek.get(index1);
-    vek.set(index1, vek.get(index2));
-    vek.set(index2, temp);
+    const int temp = vek[index1];
+    vek[index1] = vek[index2];
+    vek[index2] = temp;
 }
