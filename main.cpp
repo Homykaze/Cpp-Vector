@@ -42,8 +42,11 @@ int main()
 /// Implementations of utility functions
 void display(const Vektor<int>& vek)
 {
-    for (int i = 0; i < vek.size(); ++i)
-        std::cout << vek[i] << " ";
+    /// Exercise const_iterator, fails with plain iterator
+    Vektor<int>::const_iterator itr = vek.begin();
+    Vektor<int>::const_iterator end = vek.end();
+    for (itr; itr != end; ++itr)
+        std::cout << *itr << " ";
     std::cout << "\n";
 }
 

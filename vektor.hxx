@@ -142,7 +142,7 @@ public:
         delete[] vektor;
     }
 
-    /// Iterator part is here:
+    /// Iterators' part is here:
     struct iterator 
     {
         /// Argument constructor
@@ -167,6 +167,31 @@ public:
 
     iterator begin() { return iterator(&vektor[start]); }
     iterator end() { return iterator(&vektor[finish + 1]); }
+
+    struct const_iterator
+    {
+        /// Argument constructor
+        const_iterator(const T* arg) : ptr(arg) {}
+
+        /// Dereference operator
+        const T& operator *() const { return *ptr; }
+        /// Pointer operator
+        const T* operator ->() { return ptr; };
+        /// Prefix increment operator
+        const const_iterator& operator ++() { ptr++; return *this; }
+        /// Suffix increment operator
+        const const_iterator operator ++(int) { const_iterator temp = *this; ++(*this); return temp; }
+        /// Comparison operator
+        friend bool operator ==(const const_iterator& a, const const_iterator& b) { return (a.ptr == b.ptr); }
+        /// Not eqial bool operator
+        friend bool operator !=(const const_iterator& a, const const_iterator& b) { return (a.ptr != b.ptr); }
+
+    private:
+        const T* ptr;
+    };
+
+    const_iterator begin() const { return const_iterator(&vektor[start]); }
+    const_iterator end() const { return const_iterator(&vektor[finish + 1]); }
 
 private:
 
