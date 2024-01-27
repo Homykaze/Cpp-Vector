@@ -183,7 +183,7 @@ public:
         const const_iterator operator ++(int) { const_iterator temp = *this; ++(*this); return temp; }
         /// Comparison operator
         friend bool operator ==(const const_iterator& a, const const_iterator& b) { return (a.ptr == b.ptr); }
-        /// Not eqial bool operator
+        /// Not equal bool operator
         friend bool operator !=(const const_iterator& a, const const_iterator& b) { return (a.ptr != b.ptr); }
 
     private:
