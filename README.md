@@ -10,6 +10,6 @@ The "efficient" way of memory allocation is in the way the data structure is imp
 
 ### [allocated memory][user's array][allocated memory]
 
-Users do not have direct access to the "allocated memory" parts of the data structure, but they can get it upon an explicit request, for example, with a `push_back()` method or similar. The only free access that they have is to the "user's array" section of the structure.
+Users do not have direct access to the "allocated memory" parts of the data structure, but they can transfer it to their accessible segment (user's array) upon an explicit request, for example, with a call to `push_back()` method or similar. The only free access that they have is to the "user's array" segment of the structure.
 
-The nested iterator structure should comply with the stl syntax.
+The nested iterator structure complies with the C++ STL syntax.
