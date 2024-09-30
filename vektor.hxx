@@ -1,4 +1,4 @@
-/// Template vector interface 'Vektor', notice 'k'.
+/// Template vector interface 'Vektor' with a 'k'.
 /// The idea of this Vektor is to keep user data like this
 /// [allocated memory][user's array][allocated memory]
 /// The allocated parts of memory will be available to users only
