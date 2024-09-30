@@ -1,5 +1,5 @@
 #include <iostream>
-#include "vektortemplate.hxx"
+#include "vektor.hxx"
 
 using namespace vektor;
 
