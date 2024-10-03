@@ -13,7 +13,7 @@
 
 #include <iostream>
 
-namespace vektor{
+namespace vektor {
 
 template <typename T>
 class Vektor {
@@ -25,21 +25,17 @@ public:
     }
 
     /// No argument constructor allocating a 32-element array
-    Vektor()
-    {
+    Vektor() :
+        length(32), userLength(0), start(0), finish(0) {
         ++instances;
-        length = 32;
-        userLength = 0;
-        start = 0;
-        finish = 0;
         /// Memory allocation
         vektor = new T[length];
     }
 
     /// Constructor with initial number of elements for a newly created vektor
     /// \param size: Initial size of the vektor-array
-    Vektor(int size)
-    {
+    Vektor(int size) :
+        length(32), userLength(size) {
         ++instances;
         length = 32;
         userLength = size;
@@ -60,18 +56,16 @@ public:
 
     /// Copy constructor
     /// \param &other: Other instance of Vektor class
-    Vektor(const Vektor& other)
-    {
-        length = other.length;
-        userLength = other.userLength;
-        start = other.start;
-        finish = other.finish;
+    Vektor(const Vektor& other) :
+        length(other.length), userLength(other.userLength), start(other.start), finish(other.finish){
+        ++instances;
+        /// Memory allocation
         vektor = new T[length];
         for (int i = 0; i < length; ++i)
             vektor[i] = other.vektor[i];
     }
 
-    /// Assignment operator 
+    /// Assignment operator
     /// \param &other: Other instance of Vektor class
     Vektor& operator= (const Vektor& other)
     {

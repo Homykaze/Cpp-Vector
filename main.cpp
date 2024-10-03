@@ -4,22 +4,43 @@
 using namespace vektor;
 
 
-/// Display vektor's emelents
+// Display vektor's emelents.
 void display(const Vektor<int>& vek);
-/// Quick sort implementation for testing purposes
+// Quick sort implementation for testing purposes.
 void qsort(Vektor<int>& vek, int low, int high);
-/// Quick sort utility function for partitioning
+// Quick sort utility function for partitioning.
 int partition(Vektor<int>& vek, int low, int high);
-/// Another utility function necessary for qsort
+// Another utility function necessary for qsort.
 void swap(const int index1, const int index2, Vektor<int>& vek);
 
-/// Driver code
+// Driver code.
 int main()
 {
+    Vektor<int> vek1;
+    std::cout << "Test constructor: \t\t PASS\n";
+    std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
+
     int n = 5;
-    Vektor<int> vek(n);
-    for (int i = 0; i < vek.size(); ++i)
-        vek[i] = n - i;
+    Vektor<int> vek2(n);
+    std::cout << "Test argument constructor: \t PASS\n";
+    std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
+
+    vek1 = vek2;
+    std::cout << "Test assignment operator: \t PASS\n";
+    std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
+
+    // Fill in the vektor with some data.
+    for (int i = 0; i < vek1.size(); ++i)
+        vek1[i] = n - i;
+    std::cout << "Starting data of the array: ";
+    display(vek1);
+
+    // Test copy constructor.
+    Vektor<int> vek = vek1;
+    std::cout << "Test copy constructor: \t\t PASS\n";
+    std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
+
+    // Fill in the vektor with more data.
     for (int i = 0; i < 20; ++i)
     {
         if (i % 2)
@@ -27,22 +48,23 @@ int main()
         else
             vek.pushfront(i * i);
     }
+
+    // Display contents before and after sorting.
+    std::cout << "Before sorting:\n";
     display(vek);
     qsort(vek, 0, vek.size() - 1);
-    display(vek);
 
-    /// Display contents using an iterator
-    std::cout << "\n";
+    // Display contents using an iterator.
+    std::cout << "After sorting:\n";
     for (Vektor<int>::iterator itr = vek.begin(); itr != vek.end(); ++itr)
         std::cout << *itr << " ";
     std::cout << "\n";
-
 }
 
-/// Implementations of utility functions
+// Utilities.
 void display(const Vektor<int>& vek)
 {
-    /// Exercise const_iterator, fails with plain iterator
+    // Exercise const_iterator, fails with plain iterator.
     Vektor<int>::const_iterator itr = vek.begin();
     Vektor<int>::const_iterator end = vek.end();
     for (itr; itr != end; ++itr)
