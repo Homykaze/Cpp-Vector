@@ -16,15 +16,18 @@ void swap(const int index1, const int index2, Vektor<int>& vek);
 // Driver code.
 int main()
 {
+    // Test no-argument constructor.
     Vektor<int> vek1;
     std::cout << "Test constructor: \t\t PASS\n";
     std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
 
+    // Test argument constructor.
     int n = 5;
     Vektor<int> vek2(n);
     std::cout << "Test argument constructor: \t PASS\n";
     std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
 
+    // Test assignment operator.
     vek1 = vek2;
     std::cout << "Test assignment operator: \t PASS\n";
     std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
@@ -52,9 +55,19 @@ int main()
     // Display contents before and after sorting.
     std::cout << "Before sorting:\n";
     display(vek);
-    qsort(vek, 0, vek.size() - 1);
 
-    // Display contents using an iterator.
+    // Test move constructor.
+    Vektor<int> vek3(std::move(vek));
+    std::cout << "Test move constructor: \t\t PASS\n";
+    std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
+    qsort(vek3, 0, vek3.size() - 1);
+
+    // Test move assignment operator.
+    vek = std::move(vek3);
+    std::cout << "Test move constructor: \t\t PASS\n";
+    std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
+
+    // Display contents using non-const iterator.
     std::cout << "After sorting:\n";
     for (Vektor<int>::iterator itr = vek.begin(); itr != vek.end(); ++itr)
         std::cout << *itr << " ";

@@ -57,7 +57,7 @@ public:
     /// Copy constructor
     /// \param &other: Other instance of Vektor class
     Vektor(const Vektor& other) :
-        length(other.length), userLength(other.userLength), start(other.start), finish(other.finish){
+        length(other.length), userLength(other.userLength), start(other.start), finish(other.finish) {
         ++instances;
         /// Memory allocation
         vektor = new T[length];
@@ -81,6 +81,41 @@ public:
         vektor = new T[length];
         for (int i = 0; i < length; ++i)
             vektor[i] = other.vektor[i];
+        return *this;
+    }
+
+    /// Move constructor.
+    /// \param &other: Other instance of Vektor class.
+    Vektor(Vektor&& other) noexcept :
+        length(other.length), userLength(other.userLength), start(other.start), finish(other.finish), vektor(other.vektor) {
+        ++instances;
+        other.length = 0;
+        other.userLength = 0;
+        other.start = 0;
+        other.finish = 0;
+        other.vektor = nullptr;
+    }
+
+    /// Move assignment operator.
+    /// \param &other: Other instance of Vektor class.
+    Vektor& operator= (Vektor&& other) noexcept
+    {
+        if (this != &other)
+        {
+            delete[] vektor;
+
+            length = other.length;
+            userLength = other.userLength;
+            start = other.start;
+            finish = other.finish;
+            vektor = other.vektor;
+
+            other.length = 0;
+            other.userLength = 0;
+            other.start = 0;
+            other.finish = 0;
+            other.vektor = nullptr;
+        }
         return *this;
     }
 
