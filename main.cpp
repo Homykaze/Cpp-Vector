@@ -64,7 +64,7 @@ int main()
 
     // Test move assignment operator.
     vek = std::move(vek3);
-    std::cout << "Test move constructor: \t\t PASS\n";
+    std::cout << "Test move assignment operator: \t PASS\n";
     std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
 
     // Display contents using non-const iterator.
