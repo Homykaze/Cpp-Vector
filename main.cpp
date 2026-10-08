@@ -32,6 +32,11 @@ int main()
     std::cout << "Test assignment operator: \t PASS\n";
     std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
 
+    // Test assignment operator to self.
+    vek1 = vek1;
+    std::cout << "Test self-assignment operator: \t PASS\n";
+    std::cout << "Instances: " << Vektor<int>::getInstances() << "\n\n";
+
     // Fill in the vektor with some data.
     for (int i = 0; i < vek1.size(); ++i)
         vek1[i] = n - i;
