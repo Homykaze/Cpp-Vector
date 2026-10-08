@@ -10,6 +10,7 @@
 #pragma once
 #ifndef VEKTOR_HXX
 #define VEKTOR_HXX
+#define DEFAULT_MARGIN 16
 
 #include <iostream>
 
@@ -26,8 +27,12 @@ public:
 
     /// No argument constructor allocating a 32-element array.
     Vektor() :
-        _length(32), _userLength(0), _start(0), _finish(0) {
+        _length(32), _userLength(0) {
         ++_instances;
+        int size = 0;
+        _start = (_length - size) / 2;
+        _finish = _start + size - 1;
+
         // Memory allocation.
         _vektor = new T[_length];
     }
@@ -36,9 +41,9 @@ public:
     /// \param size: Initial size of the vektor-array.
     Vektor(int size) :
         _length(32), _userLength(size) {
+        if (size < 0)
+            throw std::length_error("Negative size vektor creation attempt.");
         ++_instances;
-        _length = 32;
-        _userLength = size;
 
         // The actual length must always be greater than the user's.
         while (_length < size)
@@ -46,7 +51,7 @@ public:
 
         // This is why we double it once more to make sure that their sizes are not too close.
         // In case initial size is less than 32 but close to 32, or in case of greater sizes.
-        if (size < _length && _length - size < 16 || _length > 32)
+        if (_length - size < DEFAULT_MARGIN || _length > 32)
             _length *= 2;
 
         // Here we should be somewhere in the middle of the inaccessible to user array.
@@ -179,6 +184,25 @@ public:
         delete[] _vektor;
     }
 
+#ifndef NDEBUG
+    /// Debug info for convenience and testing.
+    void debug()
+    {
+        std::cout << "Instances: " << _instances << "\n";
+        std::cout << "Full length: " << _length << "\n";
+        std::cout << "User length: " << _userLength << "\n";
+        std::cout << "Range for user length: [" << _start << " " << _finish << "]" << "\n";
+        std::cout << "All values from _vektor: " << "\n";
+        for (int i = 0; i < _length; ++i)
+            std::cout << _vektor[i] << " ";
+        std::cout << "\n";
+        std::cout << "All values accessible to user: " << "\n";
+        for (int i = _start; i <= _finish; ++i)
+            std::cout << _vektor[i] << " ";
+        std::cout << "\n";
+    }
+#endif
+
     // Iterators' part is here:
     struct iterator 
     {
@@ -253,25 +277,6 @@ private:
         delete[] _vektor;
         return newVektor;
     }
-
-#ifdef DEBUG
-    /// Debug info for convenience and testing.
-    void debug()
-    {
-        std::cout << "Instances: " << _instances << "\n";
-        std::cout << "Full length: " << _length << "\n";
-        std::cout << "User length: " << _userLength << "\n";
-        std::cout << "Range for user length: [" << _start << " " << "\n" << "]" << "\n";
-        std::cout << "All values from _vektor: " << "\n";
-        for (int i = 0; i < _length; ++i)
-            std::cout << _vektor[i] << " ";
-        std::cout << "\n";
-        std::cout << "All values accessible to user: " << "\n";
-        for (int i = _start; i <= _finish; ++i)
-            std::cout << _vektor[i] << " ";
-        std::cout << "\n";
-    }
-#endif
 
     /// Actual complete size of the Vektor.
     int _length;
