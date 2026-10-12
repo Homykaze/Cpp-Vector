@@ -12,6 +12,7 @@
 #define VEKTOR_HXX
 
 #include <iostream>
+#include <stdexcept>
 
 namespace vektor {
 
@@ -25,11 +26,11 @@ public:
     }
 
     /// No-argument constructor allocating a 32-element array.
-    explicit Vektor() : Vektor(0) {}
+    Vektor() : Vektor(0) {}
 
     /// Constructor with initial number of elements for a newly created vektor.
     /// \param size: Initial size of the vektor-array.
-    Vektor(int size) :
+    explicit Vektor(int size) :
         _length(32), _userLength(size)
     {
         if (size < 0)
