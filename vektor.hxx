@@ -249,7 +249,7 @@ private:
 
     /// Resizing method. Doubles the size of the current array
     /// and keeps users' data in the middle.
-    T* _get_doubled_vektor()
+    T* _getDoubledVektor()
     {
         _length *= 2;
         T* newVektor = new T[_length];
